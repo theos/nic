@@ -8,7 +8,7 @@ use Archive::Tar;
 use Cwd qw(abs_path getcwd);
 
 use FindBin;
-use lib "$FindBin::Bin/lib";
+use lib "$FindBin::RealBin/lib";
 use NIC::Formats::NICTar;
 
 package NIC::Archive::Tar::File;
