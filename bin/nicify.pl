@@ -73,19 +73,18 @@ if(!defined $newnic->name) {
 	exitWithError("Template has no name. Please insert a `name \"<name>\"` directive into $control_in.");
 }
 
-{ my $_ = scalar @{$newnic->{CONTENTS}}; info("$_ entr".($_==1?"y.":"ies.")); }
-{ my $_ = scalar @{$newnic->{PROMPTS}}; info("$_ prompt".($_==1?".":"s.")); }
-my $constraints = 0;
+{ my $contents = scalar @{$newnic->{CONTENTS}}; info("$contents entr".($contents==1?"y.":"ies.")); }
+{ my $prompts = scalar @{$newnic->{PROMPTS}}; info("$prompts prompt".($prompts==1?".":"s.")); }
 {
-	my %constrainthash;
+	my %constrainthash = ();
 	for(@{$newnic->{CONTENTS}}) {
 		for my $c ($_->constraints) {
 			$constrainthash{$c}++;
 		}
 	}
-	$constraints = scalar keys %constrainthash;
+	my $constraints = scalar keys %constrainthash;
+	info("$constraints constraint".($constraints==1?".":"s."));
 }
-{ my $_ = $constraints; info("$_ constraint".($_==1?".":"s.")); }
 
 my $fixedfn = join("_", File::Spec->splitdir($newnic->name));
 my $filename = $fixedfn.".nic.tar";
