@@ -32,6 +32,8 @@ if($^O eq "linux") {
 our $savedStdout = *STDOUT;
 
 my @_dirs = File::Spec->splitdir(abs_path($FindBin::Bin));
+$_dirs[$#_dirs]="vendor/templates";
+our $_vendortemplatepath = File::Spec->catdir(@_dirs);
 $_dirs[$#_dirs]="templates";
 our $_templatepath = File::Spec->catdir(@_dirs);
 $#_dirs--;
@@ -228,7 +230,7 @@ sub promptList {
 		}
 		if($_ < 1 || $_ > $#list+1) {
 			print "Invalid value.",$/,$prompt,": ";
-			next;	
+			next;
 		}
 		$idx = $_-1;
 		last;
@@ -268,6 +270,7 @@ sub _loadNIC {
 
 sub getTemplates {
 	our @templates = ();
+	find({wanted => \&templateWanted, no_chdir => 1}, $_vendortemplatepath);
 	find({wanted => \&templateWanted, no_chdir => 1}, $_templatepath);
 	sub templateWanted {
 		if(-f && (/\.nic$/ || /\.nic\.tar$/)) {
