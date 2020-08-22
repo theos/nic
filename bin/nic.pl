@@ -36,6 +36,8 @@ $_dirs[$#_dirs]="vendor/templates";
 our $_vendortemplatepath = File::Spec->catdir(@_dirs);
 $_dirs[$#_dirs]="templates";
 our $_templatepath = File::Spec->catdir(@_dirs);
+$_dirs[$#_dirs]="mod";
+my $_modpath = File::Spec->catdir(@_dirs);
 $#_dirs--;
 my $_theospath = File::Spec->catdir(@_dirs);
 
@@ -272,6 +274,12 @@ sub getTemplates {
 	our @templates = ();
 	find({wanted => \&templateWanted, no_chdir => 1}, $_vendortemplatepath);
 	find({wanted => \&templateWanted, no_chdir => 1}, $_templatepath);
+	foreach my $mod (<$_modpath/*>) {
+		my $mod_templates = "$mod/templates";
+		if(-d $mod_templates) {
+			find({wanted => \&templateWanted, no_chdir => 1}, $mod_templates);
+		}
+	}
 	sub templateWanted {
 		if(-f && (/\.nic$/ || /\.nic\.tar$/)) {
 			my $nic = _loadNIC($_);
