@@ -189,7 +189,7 @@ if($makefile) {
 } else {
 	# New project, so create .gitignore
 	my $gitignore = "$dirname/.gitignore";
-	open my $fileHandle, ">>", $gitignore or die "Failed to create $gitignore\n";
+	open my $fileHandle, ">>", $gitignore or exitWithError("Failed to create $gitignore.");
 	print $fileHandle ".theos/\npackages/\n";
 	close $fileHandle;
 }
