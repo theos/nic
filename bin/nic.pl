@@ -291,7 +291,7 @@ sub getTemplates {
 
 sub cleanProjectName {
 	my $name = shift;
-	$name =~ s/[^a-zA-Z0-9+-.]//g;
+	$name =~ s/[^a-zA-Z0-9+.-]//g;
 	return $name;
 }
 
