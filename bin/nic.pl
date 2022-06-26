@@ -186,6 +186,12 @@ if($makefile) {
 		}
 	}
 	untie(@lines);
+} else {
+	# New project, so create .gitignore
+	my $gitignore = "$dirname/.gitignore";
+	open my $fileHandle, ">>", $gitignore or exitWithError("Failed to create $gitignore.");
+	print $fileHandle ".theos/\npackages/\n.DS_Store\n";
+	close $fileHandle;
 }
 print "Done.",$/;
 
