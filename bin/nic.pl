@@ -313,15 +313,22 @@ sub getHomeDir {
 }
 
 sub loadConfig {
-	open(my $cfh, "<", getHomeDir()."/.nicrc") or return;
-	while(<$cfh>) {
-		if(/^(.+?)\s*=\s*\"(.*)\"$/) {
-			my $key = $1;
-			my $value = $2;
-			$CONFIG{$key} = $value;
-		}
-	}
+    open(my $cfh, "<", getHomeDir()."/.nicrc") or return;
+    while(<$cfh>) {
+        # Remove leading and trailing whitespace
+        s/^\s+|\s+$//g;
+        if (/^(.+?)\s*=\s*"(.*)"$/) {
+            my $key = $1;
+            my $value = $2;
+            # Remove leading and trailing whitespace from key and value
+            $key =~ s/^\s+|\s+$//g;
+            $value =~ s/^\s+|\s+$//g;
+            $CONFIG{$key} = $value;
+        }
+    }
+    close($cfh);
 }
+
 
 sub nicPrompt {
 	# Do we want to import these variables into the NIC automatically? In the format name.VARIABLE?
