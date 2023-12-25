@@ -315,10 +315,11 @@ sub getHomeDir {
 sub loadConfig {
 	open(my $cfh, "<", getHomeDir()."/.nicrc") or return;
 	while(<$cfh>) {
-		if (/^\s*(.+?)\s*=\s*"(.*)"$/) {
+		# Grab config key-value pairs
+		# Match irrespective of leading whitespace
+		if(/^\s*(.+?)\s*=\s*\"(.*)\"$/) {
 			my $key = $1;
 			my $value = $2;
-			$value =~ s/^\s+|\s+$//g;
 			$CONFIG{$key} = $value;
 		}
 	}
