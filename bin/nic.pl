@@ -101,8 +101,8 @@ promptIfMissing(\$project_name, undef, "Project Name (required)");
 exitWithError("I can't live without a project name! Aieeee!") if !$project_name;
 $clean_project_name = cleanProjectName($project_name);
 
-$package_name = $package_prefix.".".$clean_project_name if $CONFIG{'skip_package_name'};
-promptIfMissing(\$package_name, $package_prefix.".".$clean_project_name, "Package Name") unless $NIC->variableIgnored("PACKAGENAME");
+$package_name = $package_prefix.".".lc($clean_project_name) if $CONFIG{'skip_package_name'};
+promptIfMissing(\$package_name, $package_prefix.".".lc($clean_project_name), "Package Name") unless $NIC->variableIgnored("PACKAGENAME");
 
 promptIfMissing(\$username, getUserName(), "Author/Maintainer Name") unless $NIC->variableIgnored("USER");
 
