@@ -106,7 +106,7 @@ promptIfMissing(\$package_name, $package_prefix.".".lc($clean_project_name), "Pa
 
 promptIfMissing(\$username, getUserName(), "Author/Maintainer Name") unless $NIC->variableIgnored("USER");
 
-my $directory = lc($clean_project_name);
+my $directory = $clean_project_name;
 if(-d $directory) {
 	my $response;
 	promptIfMissing(\$response, "N", "There's already something in $directory. Continue");
@@ -156,8 +156,8 @@ if($CONFIG{'link_theos'} != 0 && !$NIC->variableIgnored("THEOS")) {
 # Execute control script.
 $NIC->exec or exitWithError("Failed to build template '".$NIC->name."'.");
 
-print "Instantiating ".$NIC->name." in ".lc($clean_project_name)."/...",$/;
-my $dirname = lc($clean_project_name);
+print "Instantiating ".$NIC->name." in ".$clean_project_name."/...",$/;
+my $dirname = $clean_project_name;
 $NIC->build($dirname);
 chdir($cwd);
 
