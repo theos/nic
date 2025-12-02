@@ -313,7 +313,19 @@ sub getHomeDir {
 }
 
 sub loadConfig {
-	open(my $cfh, "<", getHomeDir()."/.nicrc") or return;
+	my $path;
+	if (defined $ENV{'XDG_CONFIG_HOME'} &&
+	    -e $ENV{'XDG_CONFIG_HOME'}."/theos/nicrc") {
+		$path = $ENV{'XDG_CONFIG_HOME'}."/theos/nicrc";
+	} elsif (-e getHomeDir()."/.config/theos/nicrc") {
+		$path = getHomeDir()."/.config/theos/nicrc";
+	} elsif (-e getHomeDir()."/.nicrc") {
+		$path = getHomeDir()."/.nicrc";
+	} else {
+		return
+	};
+
+	open(my $cfh, "<", $path);
 	while(<$cfh>) {
 		# Grab config key-value pairs
 		# Match irrespective of leading whitespace
