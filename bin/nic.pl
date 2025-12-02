@@ -207,6 +207,7 @@ sub promptIfMissing {
 	} else {
 		print $::savedStdout $prompt, ": ";
 	}
+	$::savedStdout->flush();
 
 	$| = 1; $_ = <STDIN>;
 	chomp;
