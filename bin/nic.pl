@@ -115,6 +115,7 @@ if(-d $directory) {
 
 $NIC->variable("FULLPROJECTNAME") = $project_name;
 $NIC->variable("PROJECTNAME") = $clean_project_name;
+$NIC->variable("PACKAGEPREFIX") = $package_prefix;
 $NIC->variable("PACKAGENAME") = $package_name;
 $NIC->variable("USER") = $username;
 
